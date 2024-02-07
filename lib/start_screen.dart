@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gym_rat/home_Screen.dart';
+// import 'package:gym_rat/home_Screen.dart';
 import 'scroller_indicator.dart';
 
 class StartScreen extends StatefulWidget {
@@ -81,7 +83,13 @@ class _StartScreenState extends State<StartScreen> {
               height: 30,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                print('h');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
+              },
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 199, 248, 86),
                   foregroundColor: Colors.black,

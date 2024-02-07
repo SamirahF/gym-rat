@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'start_screen.dart';
+import 'package:gym_rat/gym_rat.dart';
+// import 'start_screen.dart';
 
 void main() {
-  runApp(const StartScreen());
+  runApp(GymRat());
+  // runApp(const HomeScreen());
 }
