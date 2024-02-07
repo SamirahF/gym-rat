@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:gym_rat/nav_screens.dart';
+import 'calculator_screen.dart';
+import 'library_screen.dart';
+import 'timer_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
