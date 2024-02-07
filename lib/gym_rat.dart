@@ -14,7 +14,7 @@ class GymRat extends StatefulWidget {
 class _GymRatState extends State<GymRat> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: StartScreen(), // Wrap StartScreen inside MaterialApp
     );
   }

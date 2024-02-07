@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gym_rat/home_Screen.dart';
+import 'package:gym_rat/home_screen.dart';
 // import 'package:gym_rat/home_Screen.dart';
 import 'scroller_indicator.dart';
 
@@ -84,10 +84,9 @@ class _StartScreenState extends State<StartScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                print('h');
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
                 );
               },
               style: ElevatedButton.styleFrom(
