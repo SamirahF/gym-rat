@@ -38,8 +38,6 @@ class _BMICalculatorState extends State<BMICalculator> {
   }
 
   void heightlistiner() {
-    print("Height Controller Value");
-    print(isHeightEmpty);
     setState(() {
       isHeightEmpty = heightController.text.isEmpty;
       calculateBMI();
@@ -47,34 +45,43 @@ class _BMICalculatorState extends State<BMICalculator> {
   }
 
   void weightListiner() {
-    print("Weight Controller Value");
-    print(isWeightEmpty);
     setState(() {
       isWeightEmpty = weightController.text.isEmpty;
       calculateBMI();
-      print("SCORE CLASSIFICATION:");
-      print(scoreClassification);
     });
   }
 
   void calculateBMI() {
     if (heightController.text != "" && weightController.text != "") {
-      double height =
-          double.parse(heightController.text) / 100; // Convert height to meters
-      double weight = double.parse(weightController.text);
-      setState(() {
-        bmiResult = weight / (height * height);
-        for (var key in classifications.keys) {
-          if (bmiResult <= key) {
-            scoreClassification = classifications[key] ?? "-";
-            break;
+      bool isHeightNumeric = isNumeric(heightController.text);
+      bool isWeightNumeric = isNumeric(weightController.text);
+      print("isHeightNumeric");
+      print(isHeightNumeric);
+      print("isWeightNumeric");
+      print(isWeightNumeric);
+      if (isHeightNumeric && isWeightNumeric) {
+        double height = double.parse(heightController.text) / 100;
+        double weight = double.parse(weightController.text);
+        setState(() {
+          bmiResult = weight / (height * height);
+          print(bmiResult);
+          for (var key in classifications.keys) {
+            if (bmiResult <= key) {
+              scoreClassification = classifications[key] ?? "-";
+              break;
+            }
+            scoreClassification = classifications[41] ?? "-";
           }
-          scoreClassification = classifications[41] ?? "-";
-        }
-      });
+        });
+      }
     } else {
       scoreClassification = "";
     }
+  }
+
+  bool isNumeric(String str) {
+    final numericRegex = RegExp(r'^[0-9]+$');
+    return numericRegex.hasMatch(str);
   }
 
   // @TODO: Form validation
