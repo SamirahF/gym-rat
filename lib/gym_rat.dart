@@ -19,5 +19,3 @@ class _GymRatState extends State<GymRat> {
     );
   }
 }
-
-// Your StartScreen widget and other code here...
