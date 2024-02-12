@@ -17,6 +17,7 @@ class CalculatorScreen extends StatelessWidget {
             );
           },
           style: ElevatedButton.styleFrom(
+            fixedSize: const Size(200, 200),
             backgroundColor: const Color.fromARGB(255, 199, 248, 86),
             foregroundColor: Colors.black,
           ),
@@ -34,9 +35,9 @@ class CalculatorScreen extends StatelessWidget {
             );
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromARGB(255, 199, 248, 86),
-            foregroundColor: Colors.black,
-          ),
+              backgroundColor: const Color.fromARGB(255, 199, 248, 86),
+              foregroundColor: Colors.black,
+              fixedSize: const Size(200, 200)),
           child: const Text("Weight Convertor"),
         )
       ]),
