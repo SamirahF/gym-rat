@@ -12,10 +12,22 @@ class GymRat extends StatefulWidget {
 }
 
 class _GymRatState extends State<GymRat> {
+  ThemeData myTheme = ThemeData(
+    // Other theme properties...
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0)), // Button shape
+      ),
+    ),
+    // Define themes for TextButton and OutlinedButton similarly
+  );
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: StartScreen(), // Wrap StartScreen inside MaterialApp
+    return MaterialApp(
+      theme: myTheme,
+
+      home: const StartScreen(), // Wrap StartScreen inside MaterialApp
     );
   }
 }
