@@ -11,9 +11,7 @@ class TimerWidget extends StatefulWidget {
   const TimerWidget({super.key});
 
   @override
-  _TimerWidget createState() {
-    return _TimerWidget();
-  }
+  _TimerWidget createState() => _TimerWidget();
 }
 
 class _TimerWidget extends State<TimerWidget> {
@@ -38,13 +36,13 @@ class _TimerWidget extends State<TimerWidget> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             height: 430,
             child: currScreen,
           ),
-          Divider(color: Colors.grey, height: 32),
-          SizedBox(height: 10),
+          const Divider(color: Colors.grey, height: 32),
+          const SizedBox(height: 10),
           Center(
               child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -55,21 +53,20 @@ class _TimerWidget extends State<TimerWidget> {
                       switchScreen();
                     });
                   },
-                  child: Text('Start')),
-              SizedBox(
+                  child: const Text('Start')),
+              const SizedBox(
                 width: 90,
               ),
               ElevatedButton(
                 onPressed: () {
                   switchScreen1();
-                  print('$_currentMin');
                 },
-                child: Text('Stop'),
                 style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all<Color>(
                         const Color.fromARGB(255, 81, 81, 81)),
                     backgroundColor: MaterialStateProperty.all<Color>(
                         const Color.fromARGB(255, 199, 248, 86))),
+                child: const Text('Stop'),
               )
             ],
           ))
@@ -121,7 +118,7 @@ class _SetTimerState extends State<_SetTimer> {
                 fontSize: 40,
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             NumberPicker(
               itemWidth: 50,
               value: _currentSec,
@@ -130,8 +127,9 @@ class _SetTimerState extends State<_SetTimer> {
               step: 1,
               haptics: true,
               onChanged: (value) => setState(() => _currentSec = value),
-              textStyle: TextStyle(color: Colors.white54, fontSize: 20),
-              selectedTextStyle: TextStyle(color: Colors.white, fontSize: 30),
+              textStyle: const TextStyle(color: Colors.white54, fontSize: 20),
+              selectedTextStyle:
+                  const TextStyle(color: Colors.white, fontSize: 30),
             ),
             const Text(
               "sec",
@@ -142,7 +140,7 @@ class _SetTimerState extends State<_SetTimer> {
             ),
           ],
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
       ],
     );
   }
@@ -168,13 +166,13 @@ class _CountdownState extends State<_Countdown> {
             lineWidth: 20,
             progressColor: const Color.fromARGB(255, 199, 248, 86),
             backgroundColor: const Color.fromARGB(255, 81, 81, 81),
-            center: Text(
+            center: const Text(
               'set timer',
               style: TextStyle(color: Colors.white),
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 80,
         ),
       ],
