@@ -27,7 +27,7 @@ class _TimerWidget extends State<TimerWidget> {
 
   void switchScreen1() {
     setState(() {
-      currScreen = _Countdown();
+      currScreen = _SetTimer();
     });
   }
 
@@ -40,11 +40,11 @@ class _TimerWidget extends State<TimerWidget> {
         children: [
           Container(
             width: double.infinity,
-            height: 500,
+            height: 430,
             child: currScreen,
           ),
           Divider(color: Colors.grey, height: 32),
-          SizedBox(height: 16),
+          SizedBox(height: 10),
           Center(
               child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -53,15 +53,15 @@ class _TimerWidget extends State<TimerWidget> {
                   onPressed: () {
                     setState(() {
                       switchScreen();
-                      print('here');
                     });
                   },
-                  child: Text('Go')),
+                  child: Text('Start')),
               SizedBox(
                 width: 90,
               ),
               ElevatedButton(
                 onPressed: () {
+                  switchScreen1();
                   print('$_currentMin');
                 },
                 child: Text('Stop'),

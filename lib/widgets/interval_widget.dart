@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class InvertalWidget extends StatefulWidget {
-  const InvertalWidget({super.key});
+class IntervalWidget extends StatefulWidget {
+  const IntervalWidget({super.key});
 
   @override
-  _InvertalWidget createState() {
-    return _InvertalWidget();
+  _IntervalWidgetState createState() {
+    return _IntervalWidgetState();
   }
 }
 
-class _InvertalWidget extends State<InvertalWidget> {
+class _IntervalWidgetState extends State<IntervalWidget> {
   @override
   Widget build(BuildContext context) {
     return const Column(
