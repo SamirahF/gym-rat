@@ -47,9 +47,6 @@ class _BMICalculatorState extends State<BMICalculator> {
         isHeightValid = true;
         calculateBMI();
       }
-      print("isHeight Empty ${isHeightEmpty}");
-      print("is height number ${height}");
-      print("is height valid? ${isHeightValid}");
     });
   }
 
@@ -63,9 +60,6 @@ class _BMICalculatorState extends State<BMICalculator> {
         isWeightValid = true;
         calculateBMI();
       }
-      print("isWeight Empty ${isWeightEmpty}");
-      print("is weight number ${weight}");
-      print("is weight valid? ${isWeightValid}");
     });
   }
 
