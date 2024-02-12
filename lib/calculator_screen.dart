@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_rat/bmi_screen.dart';
+import 'weight_conv_screen.dart';
 
 class CalculatorScreen extends StatelessWidget {
   const CalculatorScreen({super.key});
@@ -12,11 +13,10 @@ class CalculatorScreen extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => BMICalculator()),
+              MaterialPageRoute(builder: (context) => const BMICalculator()),
             );
           },
           style: ElevatedButton.styleFrom(
-            fixedSize: const Size(200, 200),
             backgroundColor: const Color.fromARGB(255, 199, 248, 86),
             foregroundColor: Colors.black,
           ),
@@ -26,11 +26,17 @@ class CalculatorScreen extends StatelessWidget {
           height: 50,
         ),
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const WeightConvertorScreen()),
+            );
+          },
           style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromARGB(255, 199, 248, 86),
-              foregroundColor: Colors.black,
-              fixedSize: const Size(200, 200)),
+            backgroundColor: const Color.fromARGB(255, 199, 248, 86),
+            foregroundColor: Colors.black,
+          ),
           child: const Text("Weight Convertor"),
         )
       ]),
