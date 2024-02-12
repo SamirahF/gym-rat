@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:gym_rat/scroller_indicator.dart';
+import 'package:gym_rat/widgets/interval_widget.dart';
+import 'package:gym_rat/widgets/stopwatch_widget.dart';
+// import 'package:gym_rat/widgets/test.dart';
+import 'package:gym_rat/widgets/timer_widget.dart';
+// import 'package:gym_rat/widgets/timer_widget.dart';
 
 class TimerScreen extends StatefulWidget {
   const TimerScreen({super.key});
@@ -12,9 +16,33 @@ class TimerScreen extends StatefulWidget {
 }
 
 class _TimerScreen extends State<TimerScreen> {
-  double precent = 0;
-  static int TimeInMin = 25;
-  int TimeInSec = TimeInMin * 60;
+  final PageController pageController = PageController();
+  int currentPageIndex = 0;
+
+  @override
+  void initState() {
+    // We first need to call the super init state.
+    super.initState();
+    pageController.addListener(_handlePageChange);
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
+  // This method is triggered whenever the page
+  // changes in the page view.
+  void _handlePageChange() {
+    // Calls the build method again
+    setState(() {
+      // This line retirevs the current page index
+      // showing in the page view
+      currentPageIndex = pageController.page!.round();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,43 +51,31 @@ class _TimerScreen extends State<TimerScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "Timer",
-              style: TextStyle(color: Colors.white),
-            ),
-            CircularPercentIndicator(
-              radius: 100.0,
-              percent: 0.5,
-              lineWidth: 50,
-              progressColor: const Color.fromARGB(255, 199, 248, 86),
-              backgroundColor: const Color.fromARGB(255, 81, 81, 81),
-              center: const Text(
-                'Set Timer',
-                style: TextStyle(color: Colors.white),
+            Expanded(
+              child: PageView(
+                // Link the page view with the page co
+                controller: pageController,
+                children: [
+                  // ExampleApp(),
+                  TimerWidget(),
+                  StopwatchWidget(),
+                  InvertalWidget(),
+                ],
               ),
             ),
-            SizedBox(
-              height: 80,
-            ),
-            Center(
-                child: Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(onPressed: () {}, child: Text('Go')),
-                SizedBox(
-                  width: 90,
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Stop'),
-                  style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 81, 81, 81)),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 199, 248, 86))),
-                )
+                Indicator(active: currentPageIndex == 0),
+                const SizedBox(width: 8.0),
+                Indicator(active: currentPageIndex == 1),
+                const SizedBox(width: 8.0),
+                Indicator(active: currentPageIndex == 2),
               ],
-            ))
+            ),
+            const SizedBox(
+              height: 90,
+            ),
           ],
         ),
       ),
