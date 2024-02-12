@@ -27,8 +27,8 @@ class _BMICalculatorState extends State<BMICalculator> {
     40: "Obese Class II",
     41: "Obese Class III"
   };
-  bool isWeightEmpty = true;
-  bool isHeightEmpty = true;
+  bool isHeightValid = false;
+  bool isWeightValid = false;
 
   @override
   void initState() {
@@ -39,49 +39,53 @@ class _BMICalculatorState extends State<BMICalculator> {
 
   void heightlistiner() {
     setState(() {
-      isHeightEmpty = heightController.text.isEmpty;
-      calculateBMI();
+      bool isHeightEmpty = heightController.text.isEmpty;
+      double? height = double.tryParse(heightController.text);
+      if (isHeightEmpty || height == null) {
+        isHeightValid = false;
+      } else {
+        isHeightValid = true;
+        calculateBMI();
+      }
+      print("isHeight Empty ${isHeightEmpty}");
+      print("is height number ${height}");
+      print("is height valid? ${isHeightValid}");
     });
   }
 
   void weightListiner() {
     setState(() {
-      isWeightEmpty = weightController.text.isEmpty;
-      calculateBMI();
+      bool isWeightEmpty = weightController.text.isEmpty;
+      double? weight = double.tryParse(weightController.text);
+      if (isWeightEmpty || weight == null) {
+        isWeightValid = false;
+      } else {
+        isWeightValid = true;
+        calculateBMI();
+      }
+      print("isWeight Empty ${isWeightEmpty}");
+      print("is weight number ${weight}");
+      print("is weight valid? ${isWeightValid}");
     });
   }
 
   void calculateBMI() {
     if (heightController.text != "" && weightController.text != "") {
-      bool isHeightNumeric = isNumeric(heightController.text);
-      bool isWeightNumeric = isNumeric(weightController.text);
-      print("isHeightNumeric");
-      print(isHeightNumeric);
-      print("isWeightNumeric");
-      print(isWeightNumeric);
-      if (isHeightNumeric && isWeightNumeric) {
-        double height = double.parse(heightController.text) / 100;
-        double weight = double.parse(weightController.text);
-        setState(() {
-          bmiResult = weight / (height * height);
-          print(bmiResult);
-          for (var key in classifications.keys) {
-            if (bmiResult <= key) {
-              scoreClassification = classifications[key] ?? "-";
-              break;
-            }
-            scoreClassification = classifications[41] ?? "-";
+      double height = double.parse(heightController.text) / 100;
+      double weight = double.parse(weightController.text);
+      setState(() {
+        bmiResult = weight / (height * height);
+        for (var key in classifications.keys) {
+          if (bmiResult <= key) {
+            scoreClassification = classifications[key] ?? "-";
+            break;
           }
-        });
-      }
+          scoreClassification = classifications[41] ?? "-";
+        }
+      });
     } else {
       scoreClassification = "";
     }
-  }
-
-  bool isNumeric(String str) {
-    final numericRegex = RegExp(r'^[0-9]+$');
-    return numericRegex.hasMatch(str);
   }
 
   // @TODO: Form validation
@@ -209,12 +213,25 @@ class _BMICalculatorState extends State<BMICalculator> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: TextField(
-                    controller: heightController,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                        hintText: 'Height (cm)',
-                        hintStyle: TextStyle(color: Colors.white)),
+                  child: Form(
+                    autovalidateMode: AutovalidateMode.always,
+                    child: TextFormField(
+                      controller: heightController,
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter a value";
+                        }
+                        if (double.tryParse(value) == null) {
+                          return "Please enter a valid value";
+                        }
+                        return null;
+                      },
+                      style: const TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
+                          hintText: 'Height (cm)',
+                          hintStyle: TextStyle(color: Colors.white)),
+                    ),
                   ),
                 ),
               ),
@@ -240,33 +257,36 @@ class _BMICalculatorState extends State<BMICalculator> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: TextField(
-                    controller: weightController,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                        hintText: 'Weight (kg)',
-                        hintStyle: TextStyle(color: Colors.white)),
+                  child: Form(
+                    autovalidateMode: AutovalidateMode.always,
+                    child: TextFormField(
+                      controller: weightController,
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter a value";
+                        }
+                        if (double.tryParse(value) == null) {
+                          return "Please enter a valid value";
+                        }
+                        return null;
+                      },
+                      style: const TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
+                          hintText: 'Weight (kg)',
+                          hintStyle: TextStyle(color: Colors.white)),
+                    ),
                   ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              calculateBMI();
-            },
-            style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 199, 248, 86),
-                foregroundColor: Colors.black,
-                fixedSize: const Size(180, 40)),
-            child: const Text('Calculate BMI'),
-          ),
           const SizedBox(height: 30),
           Text(
-            isWeightEmpty || isHeightEmpty
-                ? ""
-                : 'BMI Score: ${bmiResult.round()} (kg/m\u00B2)',
+            isWeightValid && isHeightValid
+                ? 'BMI Score: ${bmiResult.round()} (kg/m\u00B2)'
+                : '',
             style: const TextStyle(
                 fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
           ),
@@ -274,7 +294,7 @@ class _BMICalculatorState extends State<BMICalculator> {
             height: 20,
           ),
           Text(
-            scoreClassification,
+            isHeightValid && isWeightValid ? scoreClassification : "",
             style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
