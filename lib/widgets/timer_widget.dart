@@ -1,4 +1,6 @@
 // import 'package:flutter/foundation.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gym_rat/const.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -52,6 +54,7 @@ class _TimerWidget extends State<TimerWidget> {
                     setState(() {
                       switchScreen();
                     });
+                    // startTimer();
                   },
                   child: const Text('Start')),
               const SizedBox(
@@ -152,6 +155,47 @@ class _Countdown extends StatefulWidget {
 }
 
 class _CountdownState extends State<_Countdown> {
+  late String _timerDisplay;
+  Timer? timer;
+  int seconds = _currentMin * 60 + _currentSec;
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (_) {
+      setState(() {
+        if (seconds > 0) {
+          seconds--;
+          _timerDisplay = _formatDuration(Duration(seconds: seconds));
+        } else {
+          timer?.cancel();
+        }
+      });
+    });
+  }
+
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) {
+      if (n >= 10) return "$n";
+      return "0$n";
+    }
+
+    String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
+    String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60));
+    return "$twoDigitMinutes:$twoDigitSeconds";
+  }
+
+  @override
+  void initState() {
+    _timerDisplay = '00:00';
+    startTimer();
+    // We first need to call the super init state.
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -160,15 +204,19 @@ class _CountdownState extends State<_Countdown> {
         Padding(
           padding: const EdgeInsets.only(top: 25),
           child: CircularPercentIndicator(
+            animation: true,
+            animateFromLastPercent: true,
+            animationDuration: 1000,
             backgroundWidth: 30,
             radius: 160.0,
-            percent: 0.25,
+            percent: 1 - (seconds / (_currentMin * 60 + _currentSec)),
             lineWidth: 20,
+            circularStrokeCap: CircularStrokeCap.round,
             progressColor: const Color.fromARGB(255, 199, 248, 86),
             backgroundColor: const Color.fromARGB(255, 81, 81, 81),
-            center: const Text(
-              'set timer',
-              style: TextStyle(color: Colors.white),
+            center: Text(
+              _timerDisplay,
+              style: const TextStyle(color: Colors.white, fontSize: 50),
             ),
           ),
         ),
