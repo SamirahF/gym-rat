@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gym_rat/home_screen.dart';
-// import 'package:gym_rat/home_Screen.dart';
 import 'scroller_indicator.dart';
 
 class StartScreen extends StatefulWidget {
