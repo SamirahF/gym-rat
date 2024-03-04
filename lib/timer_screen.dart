@@ -67,12 +67,8 @@ class _TimerScreen extends State<TimerScreen> {
             ],
           ),
         ),
-        body: const TabBarView(
-          children: [
-            TimerWidget(),
-            StopwatchWidget(),
-            IntervalWidget(),
-          ],
+        body: TabBarView(
+          children: [TimerWidget(), StopwatchWidget(), IntervalWidget()],
         ),
       ),
     );
