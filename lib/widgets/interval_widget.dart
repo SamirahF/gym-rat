@@ -3,7 +3,6 @@ import 'package:gym_rat/const.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'dart:async';
-import 'package:audioplayers/audioplayers.dart';
 
 int _currentMinWorking = 0;
 int _currentSecWorking = 0;
@@ -290,12 +289,6 @@ class _CountdownState extends State<_Countdown> {
   void dispose() {
     timer?.cancel();
     super.dispose();
-  }
-
-  Future<void> playSound() async {
-    AudioCache cache = AudioCache();
-    const soundPath = "alarm.wav"; // Replace with your sound file path
-    await cache.play(soundPath);
   }
 
   @override
