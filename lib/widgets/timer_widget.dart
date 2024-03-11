@@ -50,20 +50,21 @@ class _TimerWidget extends State<TimerWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      switchScreen();
-                    });
-                    // startTimer();
-                  },
+                  onPressed: currScreen == _SetTimer()
+                      ? () {
+                          switchScreen();
+                        }
+                      : null,
                   child: const Text('Start')),
               const SizedBox(
                 width: 90,
               ),
               ElevatedButton(
-                onPressed: () {
-                  switchScreen1();
-                },
+                onPressed: currScreen == _Countdown()
+                    ? () {
+                        switchScreen1();
+                      }
+                    : null,
                 style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all<Color>(
                         const Color.fromARGB(255, 81, 81, 81)),

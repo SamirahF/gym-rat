@@ -73,6 +73,7 @@ flutter:
     - assets/images/bmi.jpeg
     - assets/images/weight.jpeg
     - assets/alarm.wav
+    - assets/timerAlarm.mp3
    
 
   # An image asset can refer to one or more resolution-specific "variants", see

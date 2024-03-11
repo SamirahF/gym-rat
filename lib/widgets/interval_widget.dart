@@ -250,17 +250,21 @@ class _CountdownState extends State<_Countdown> {
     _timerDisplay = _formatDuration(Duration(seconds: seconds));
     timer = Timer.periodic(Duration(seconds: 1), (_) {
       setState(() {
+        final player = AudioCache();
+
         if (seconds > 0) {
           seconds--;
           _timerDisplay = _formatDuration(Duration(seconds: seconds));
         } else {
           if (intervalsCompleted < widget.intervals * 2) {
             isWorkingTime = !isWorkingTime;
+            player.play('timerAlarm.mp3');
             intervalsCompleted++;
             seconds = isWorkingTime ? widget.workingTime : widget.restTime;
             _timerDisplay = _formatDuration(Duration(seconds: seconds));
           } else {
             timer?.cancel();
+            player.play('timerAlarm.mp3');
           }
         }
       });
@@ -292,11 +296,11 @@ class _CountdownState extends State<_Countdown> {
     super.dispose();
   }
 
-  Future<void> playSound() async {
-    AudioCache cache = AudioCache();
-    const soundPath = "alarm.wav"; // Replace with your sound file path
-    await cache.play(soundPath);
-  }
+  // Future<void> playSound() async {
+  //   AudioCache cache = AudioCache();
+  //   const soundPath = "alarm.wav"; // Replace with your sound file path
+  //   await cache.play(soundPath);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -317,7 +321,14 @@ class _CountdownState extends State<_Countdown> {
             restartAnimation: false,
             animation: true,
             animateFromLastPercent: true,
-            animationDuration: 1000,
+            animationDuration: (1 -
+                        (seconds /
+                            (isWorkingTime
+                                ? widget.workingTime
+                                : widget.restTime))) ==
+                    0
+                ? 0
+                : 1000,
             backgroundWidth: 30,
             radius: 160.0,
             percent: 1 -
