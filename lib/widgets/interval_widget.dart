@@ -296,12 +296,6 @@ class _CountdownState extends State<_Countdown> {
     super.dispose();
   }
 
-  // Future<void> playSound() async {
-  //   AudioCache cache = AudioCache();
-  //   const soundPath = "alarm.wav"; // Replace with your sound file path
-  //   await cache.play(soundPath);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Column(
