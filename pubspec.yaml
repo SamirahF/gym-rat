@@ -72,7 +72,7 @@ flutter:
     - assets/images/sport3.png
     - assets/images/bmi.jpeg
     - assets/images/weight.jpeg
-    - assets/alarm.wav
+    - assets/countDown.mp3
     - assets/timerAlarm.mp3
    
 

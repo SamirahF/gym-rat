@@ -13,6 +13,119 @@ int _currentSecResting = 0;
 
 int _currentInterval = 1;
 
+class CountDown extends StatefulWidget {
+  const CountDown({super.key});
+
+  @override
+  _CountDownState createState() {
+    return _CountDownState();
+  }
+}
+
+class _CountDownState extends State<CountDown> {
+  late Timer timer;
+  int countdown = 10;
+  final player = AudioCache();
+  bool isPaused = false;
+  String text = "Pause";
+
+  void startCountdown() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (!isPaused) {
+          countdown--;
+          if (countdown == 3) {
+            player.play("countDown.mp3");
+          }
+          if (countdown == 0) {
+            timer.cancel();
+            Navigator.of(context).pop();
+          }
+        }
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    startCountdown();
+    // We first need to call the super init state.
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          "Countdown \u{1F525} \u{1F4AA}",
+          style: TextStyle(
+              color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 60,
+        ),
+        Container(
+          width: 150,
+          height: 150,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: primary1,
+          ),
+          child: Center(
+            child: Text(
+              countdown.toString(),
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 80,
+        ),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: primary1, // Change background color here
+            ),
+            onPressed: () {
+              // Close the dialog
+              isPaused = !isPaused;
+              if (isPaused) {
+                setState(() {
+                  text = "Resume";
+                });
+              } else {
+                setState(() {
+                  text = "Pause";
+                });
+              }
+            },
+            child: Text(text),
+          ),
+          const SizedBox(
+            width: 50,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // Close the dialog
+              if (player.fixedPlayer != null) {
+                player.fixedPlayer!.stop();
+              }
+              Navigator.of(context).pop();
+            },
+            child: const Text('Skip'),
+          ),
+        ]),
+      ],
+    );
+  }
+}
+
 class IntervalWidget extends StatefulWidget {
   const IntervalWidget({super.key});
 
@@ -29,6 +142,20 @@ class _IntervalWidgetState extends State<IntervalWidget> {
         builder: (BuildContext context) {
           // Return the pop-up widget
           return AlertDialog(
+              contentPadding: EdgeInsets.zero,
+              content: FractionallySizedBox(
+                widthFactor: 1.3, // Adjust as needed
+                heightFactor: 1.0, // Adjust as needed
+                child: Container(
+                  color: primary2,
+                  child: CountDown(),
+                ),
+              ));
+        }).then((value) => showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // Return the pop-up widget
+          return AlertDialog(
             contentPadding: EdgeInsets.zero,
             content: FractionallySizedBox(
               widthFactor: 1.3, // Adjust as needed
@@ -40,7 +167,7 @@ class _IntervalWidgetState extends State<IntervalWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    _Countdown(
+                    _Timer(
                         workingTime:
                             _currentMinWorking * 60 + _currentSecWorking,
                         restTime: _currentMinResting * 60 + _currentSecResting,
@@ -58,7 +185,7 @@ class _IntervalWidgetState extends State<IntervalWidget> {
               ),
             ),
           );
-        });
+        }));
   }
 
   @override
@@ -223,22 +350,22 @@ class _IntervalWidgetState extends State<IntervalWidget> {
   }
 }
 
-class _Countdown extends StatefulWidget {
+class _Timer extends StatefulWidget {
   final int workingTime;
   final int restTime;
   final int intervals;
 
-  const _Countdown({
+  const _Timer({
     required this.workingTime,
     required this.restTime,
     required this.intervals,
   });
 
   @override
-  _CountdownState createState() => _CountdownState();
+  _TimerState createState() => _TimerState();
 }
 
-class _CountdownState extends State<_Countdown> {
+class _TimerState extends State<_Timer> {
   late String _timerDisplay;
   Timer? timer;
   int intervalsCompleted = 1;
@@ -248,7 +375,7 @@ class _CountdownState extends State<_Countdown> {
   void startTimer() {
     seconds = isWorkingTime ? widget.workingTime : widget.restTime;
     _timerDisplay = _formatDuration(Duration(seconds: seconds));
-    timer = Timer.periodic(Duration(seconds: 1), (_) {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() {
         final player = AudioCache();
 
