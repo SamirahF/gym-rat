@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:gym_rat/const.dart';
+import 'package:gym_rat/widgets/interval_widget.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -33,6 +34,10 @@ class _TimerWidget extends State<TimerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print(currScreen);
+    if (identical(currScreen, _SetTimer())) {
+      print("condition is true");
+    }
     return Scaffold(
       backgroundColor: primary2,
       body: Column(
@@ -50,21 +55,29 @@ class _TimerWidget extends State<TimerWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                  onPressed: currScreen == _SetTimer()
-                      ? () {
-                          switchScreen();
-                        }
-                      : null,
+                  onPressed: () {
+                    print("current screen is:${currScreen}");
+                    if (currScreen is _SetTimer) {
+                      print("enterd the condition");
+                      switchScreen();
+                    }
+                  },
+                  style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 81, 81, 81)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 199, 248, 86))),
                   child: const Text('Start')),
               const SizedBox(
                 width: 90,
               ),
               ElevatedButton(
-                onPressed: currScreen == _Countdown()
-                    ? () {
-                        switchScreen1();
-                      }
-                    : null,
+                onPressed: () {
+                  if (currScreen is _Countdown) {
+                    print("switching screens");
+                    switchScreen1();
+                  }
+                },
                 style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all<Color>(
                         const Color.fromARGB(255, 81, 81, 81)),

@@ -54,6 +54,12 @@ class _CountDownState extends State<CountDown> {
   }
 
   @override
+  void dispose() {
+    timer.cancel(); // Cancel the timer when the widget is disposed
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -90,7 +96,7 @@ class _CountDownState extends State<CountDown> {
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: primary1, // Change background color here
+              backgroundColor: primary2, // Change background color here
             ),
             onPressed: () {
               // Close the dialog
