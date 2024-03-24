@@ -6,6 +6,7 @@ import 'package:gym_rat/const.dart';
 import 'package:gym_rat/widgets/interval_widget.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 int _currentMin = 0;
 int _currentSec = 0;
@@ -18,17 +19,20 @@ class TimerWidget extends StatefulWidget {
 }
 
 class _TimerWidget extends State<TimerWidget> {
-  Widget currScreen = _SetTimer();
+  Widget currScreen = const _SetTimer();
+  bool isStartButton = true;
 
   void switchScreen() {
     setState(() {
-      currScreen = _Countdown();
+      currScreen = const _Countdown();
+      isStartButton = false;
     });
   }
 
   void switchScreen1() {
     setState(() {
-      currScreen = _SetTimer();
+      currScreen = const _SetTimer();
+      isStartButton = true;
     });
   }
 
@@ -79,10 +83,13 @@ class _TimerWidget extends State<TimerWidget> {
                   }
                 },
                 style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(255, 81, 81, 81)),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color.fromARGB(255, 199, 248, 86))),
+                  foregroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(255, 81, 81, 81)),
+                  backgroundColor: !isStartButton
+                      ? MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 199, 248, 86))
+                      : MaterialStateProperty.all<Color>(priText2),
+                ),
                 child: const Text('Stop'),
               )
             ],
@@ -94,8 +101,11 @@ class _TimerWidget extends State<TimerWidget> {
 }
 
 class _SetTimer extends StatefulWidget {
+  const _SetTimer({super.key});
   @override
-  _SetTimerState createState() => _SetTimerState();
+  State<_SetTimer> createState() {
+    return _SetTimerState();
+  }
 }
 
 class _SetTimerState extends State<_SetTimer> {
@@ -164,22 +174,29 @@ class _SetTimerState extends State<_SetTimer> {
 }
 
 class _Countdown extends StatefulWidget {
+  const _Countdown({super.key});
   @override
-  _CountdownState createState() => _CountdownState();
+  State<_Countdown> createState() {
+    return _CountdownState();
+  }
 }
 
 class _CountdownState extends State<_Countdown> {
   late String _timerDisplay;
-  Timer? timer;
-  int seconds = _currentMin * 60 + _currentSec;
+  Timer? _timer;
+  int seconds = 0;
+
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (_) {
+    seconds = _currentMin * 60 + _currentSec;
+    final player = AudioCache();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       setState(() {
         if (seconds > 0) {
           seconds--;
           _timerDisplay = _formatDuration(Duration(seconds: seconds));
         } else {
-          timer?.cancel();
+          player.play('timerAlarm.mp3');
+          _timer?.cancel();
         }
       });
     });
@@ -206,7 +223,7 @@ class _CountdownState extends State<_Countdown> {
 
   @override
   void dispose() {
-    timer?.cancel();
+    _timer?.cancel(); // Cancel the timer to avoid memory leaks
     super.dispose();
   }
 
