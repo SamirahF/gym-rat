@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:gym_rat/const.dart';
-import 'package:gym_rat/widgets/interval_widget.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -60,9 +59,7 @@ class _TimerWidget extends State<TimerWidget> {
             children: [
               ElevatedButton(
                   onPressed: () {
-                    print("current screen is:${currScreen}");
                     if (currScreen is _SetTimer) {
-                      print("enterd the condition");
                       switchScreen();
                     }
                   },
