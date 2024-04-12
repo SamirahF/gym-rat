@@ -24,7 +24,7 @@ class _HomeScreen extends State<HomeScreen> {
 
     if (index == 1) {
       setState(() {
-        activeScreen = const LibraryScreen();
+        activeScreen = LibraryScreen();
       });
     }
 
