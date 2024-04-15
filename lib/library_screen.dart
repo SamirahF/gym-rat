@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym_rat/models/body_muscle.dart';
 import 'package:gym_rat/models/exercise.dart';
-import 'package:gym_rat/models/exercises_list.dart';
+import 'package:gym_rat/exercises_list.dart';
 
 class LibraryScreen extends StatelessWidget {
   LibraryScreen({super.key});
