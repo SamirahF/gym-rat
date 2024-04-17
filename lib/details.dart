@@ -29,26 +29,43 @@ class _DetailsState extends State<Details> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: primary2,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: primary1,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
       backgroundColor: primary2,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          YoutubePlayerBuilder(
-              player: YoutubePlayer(
-                controller: _controller!,
-                showVideoProgressIndicator: true,
-                progressIndicatorColor: Colors.amber,
-                progressColors: const ProgressBarColors(
-                    playedColor: Colors.amber, handleColor: Colors.amberAccent),
-              ),
-              builder: (context, player) {
-                return Container(
-                  child: player,
-                );
-              }),
           Container(
-            margin: const EdgeInsets.fromLTRB(20, 5, 5, 5),
+            margin: const EdgeInsets.fromLTRB(2, 4, 2, 4),
+            child: YoutubePlayerBuilder(
+                player: YoutubePlayer(
+                  controller: _controller!,
+                  showVideoProgressIndicator: true,
+                  progressIndicatorColor: primary1,
+                  progressColors: const ProgressBarColors(
+                      playedColor: primary1, handleColor: primary1),
+                ),
+                builder: (context, player) {
+                  return Container(
+                    child: player,
+                  );
+                }),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            margin: const EdgeInsets.fromLTRB(20, 0, 5, 5),
             child: const Text(
               "Demo & Instructions",
               style: TextStyle(color: Colors.white70, fontSize: 20),
@@ -56,7 +73,7 @@ class _DetailsState extends State<Details> {
             ),
           ),
           Container(
-            margin: const EdgeInsets.fromLTRB(15, 5, 5, 5),
+            margin: const EdgeInsets.fromLTRB(15, 0, 5, 5),
             child: Text(
               widget.exercise.name,
               style: const TextStyle(
