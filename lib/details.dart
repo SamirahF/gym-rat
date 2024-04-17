@@ -32,7 +32,7 @@ class _DetailsState extends State<Details> {
       appBar: AppBar(
         backgroundColor: primary2,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: primary1,
           ),
@@ -88,7 +88,46 @@ class _DetailsState extends State<Details> {
               widget.exercise.description,
               style: const TextStyle(color: Colors.white),
             ),
-          )
+          ),
+          Expanded(
+              child: DefaultTabController(
+                  length: 3,
+                  child: Column(children: [
+                    const TabBar(
+                      labelStyle: TextStyle(color: primary1),
+                      indicatorColor: primary1,
+                      tabs: [
+                        Tab(text: "Description"),
+                        Tab(text: "Target"),
+                        Tab(text: "Equipment"),
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          // Content for Description tab
+                          Center(
+                            child: Text(
+                              widget.exercise.description,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          // Content for Target tab
+                          Container(
+                            child: const Center(
+                              child: Text('Target content'),
+                            ),
+                          ),
+                          // Content for Equipment tab
+                          Container(
+                            child: Center(
+                              child: Text('Equipment content'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ])))
         ],
       ),
     );
