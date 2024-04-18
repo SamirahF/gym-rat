@@ -41,7 +41,7 @@ final List<BodyMuscle> bodyMuscles = [
         youtubeURL: "https://www.youtube.com/watch?v=0326dy_-CzM")
   ]),
   BodyMuscle(
-    muscleName: "shoulders",
+    muscleName: "Shoulders",
     targetArea: Area.upper,
     exercises: [],
   ),
