@@ -61,7 +61,7 @@ class _BodyMuscleListState extends State<BodyMuscleList> {
           Expanded(
             child: ListView.separated(
               itemBuilder: (BuildContext context, int index) {
-                final area = filteredBodymuscle[index];
+                // final area = filteredBodymuscle[index];
                 return Card(
                   color: primary2,
                   child: Padding(
@@ -92,14 +92,16 @@ class _BodyMuscleListState extends State<BodyMuscleList> {
                                 children: [
                                   Text(
                                     '${filteredBodymuscle.toList()[index].targetArea.name} body •',
-                                    style: TextStyle(color: Colors.white60),
+                                    style:
+                                        const TextStyle(color: Colors.white60),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Text(
                                     '${filteredBodymuscle.toList()[index].exercises.length} exercises',
-                                    style: TextStyle(color: Colors.white60),
+                                    style:
+                                        const TextStyle(color: Colors.white60),
                                   ),
                                 ],
                               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gym_rat/const.dart';
+import 'package:gym_rat/details.dart';
 import 'package:gym_rat/models/exercise.dart';
 
 class ExercisesList extends StatefulWidget {
@@ -57,27 +58,39 @@ class _ExercisesList extends State<ExercisesList> {
             )),
         body: ListView.builder(
           itemCount: filteredExercises.length,
-          itemBuilder: (ctx, index) => Card(
-            color: primary2,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Row(
-                children: [
-                  Image.network(
-                      width: 100,
-                      height: 100,
-                      'https://img.youtube.com/vi/${filteredExercises[index].getYoutubeID()}/0.jpg'),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    filteredExercises[index].name,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                  )
-                ],
+          itemBuilder: (ctx, index) => GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Details(
+                          exercise: filteredExercises[index],
+                        )),
+              );
+            },
+            child: Card(
+              color: primary2,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Row(
+                  children: [
+                    Image.network(
+                        width: 100,
+                        height: 100,
+                        'https://img.youtube.com/vi/${filteredExercises[index].getYoutubeID()}/0.jpg'),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      filteredExercises[index].name,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
